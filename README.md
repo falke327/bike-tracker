@@ -15,7 +15,7 @@ I don't think this will be a big thing, but I try to build it fullstack.
 ## Introduction
 
 In this App it is possible to save data about your bicycle movements, like driven kilometers, movement time, average
-speed and maximum speed. The App will provide you with a table-view of your weekly, monthly or yearly movements with
+speed and maximum speed. The App will provide you with a table-view of your monthly or yearly movements with
 the overall Kilometers and the current Top values for average and maximum speed.<br>
 It will also be possible to save your costs on parts and maintenance and calculate a costs per kilometer
 information.<br>
