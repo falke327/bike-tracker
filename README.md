@@ -1,4 +1,5 @@
-# Welcome to the Bike Evaluator tracking and visualizing App
+Welcome to the Bike-tracking and visualizing App (Backend)
+==========
 
 The main goal of this Project is that I can train some techniques from Spring Boot to a React Frontend.
 I don't think this will be a big thing, but I try to build it fullstack.
@@ -40,6 +41,7 @@ In all cases you need to configure a PostgreSQL database first.
 
 ### PostgreSQL Docker Container
 
+[//]: # (TODO: Provide Docker compose file)
 I highly recommend using a postgres docker container as database in development mode.
 When you have installed docker on your system you can run `./init-test-database.bat` int the bin/ directory
 to automatically configure the needed container.
