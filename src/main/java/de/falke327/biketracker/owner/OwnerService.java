@@ -14,4 +14,13 @@ public class OwnerService {
     public List<Owner> getAllOwners() {
         return ownerRepository.findAll();
     }
+
+    public void addOwner(Owner owner) {
+        // TODO: check if already exists
+        ownerRepository.save(owner);
+    }
+
+    public void deleteOwnerById(Long id) {
+        ownerRepository.deleteById(id);
+    }
 }

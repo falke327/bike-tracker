@@ -1,9 +1,7 @@
 package de.falke327.biketracker.owner;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,4 +16,14 @@ public class OwnerController {
     public List<Owner> getAllOwners() {
         return ownerService.getAllOwners();
     }
+
+    @PostMapping
+    public void addOwner(@RequestBody Owner owner) {
+        ownerService.addOwner(owner);
+    }
+
+//    @PostMapping
+//    public void deleteOwnerById(@RequestBody Long id) {
+//        ownerService.deleteOwnerById(id);
+//    }
 }

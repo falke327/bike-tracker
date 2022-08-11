@@ -68,3 +68,7 @@ locally.
 
 - <b>GET (no Parameters)</b><br>
   Returns all owners that are persisted in the Database.
+
+- <b>POST (Body: Owner)</b><br>
+  You can perform a POST request against owners with a body containing `{ "firstName": "Foo", "lastName": "Bar" }` to
+  add a new owner to the database.
