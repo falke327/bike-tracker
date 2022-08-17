@@ -33,7 +33,7 @@ CREATE TABLE bike_tracker.costs
     value_date  date           NOT NULL,
     description varchar(255)   NOT NULL,
     price       numeric(10, 2) NOT NULL,
-    bike        integer        NOT NULL,
+    bike        int8           NOT NULL,
     CONSTRAINT pk_costs PRIMARY KEY (id, value_date),
     CONSTRAINT costs_bike_fkey FOREIGN KEY (bike) REFERENCES bike_tracker.bike (id)
 );
