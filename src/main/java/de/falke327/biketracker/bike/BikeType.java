@@ -1,10 +1,10 @@
 package de.falke327.biketracker.bike;
 
 public enum BikeType {
-    MTB,
-    RACE,
-    TREKKING,
+    CHILDREN,
     CITY,
     EBIKE,
-    CHILDREN
+    MTB,
+    RACE,
+    TREKKING
 }
