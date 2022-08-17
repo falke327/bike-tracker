@@ -72,3 +72,15 @@ locally.
 - <b>POST (Body: Owner)</b><br>
   You can perform a POST request against owners with a body containing `{ "firstName": "Foo", "lastName": "Bar" }` to
   add a new owner to the database.
+
+## TODOs
+
+- For using views make the Entity @Immutable and use a Read-only Repository
+> @NoRepositoryBean<br>
+> public interface ReadOnlyRepository<T, ID> extends Repository<T, ID> {<br>
+>    List<T> findAll();<br>
+>    List<T> findAll(Sort sort);<br>
+>    Page<T> findAll(Pageable pageable);<br>
+>    Optional<T> findById(ID id);<br>
+>    long count();<br>
+> }
