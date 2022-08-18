@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -15,12 +16,22 @@ public class OwnerService {
         return ownerRepository.findAll();
     }
 
-    public void addOwner(Owner owner) {
+    public Optional<Owner> getOwnerById(Long id) {
+        return ownerRepository.findById(id);
+    }
+
+    public Owner addOwner(Owner owner) {
         // TODO: check if already exists
-        ownerRepository.save(owner);
+        return ownerRepository.save(owner);
     }
 
     public void deleteOwnerById(Long id) {
+        // TODO: handle owner not exist
         ownerRepository.deleteById(id);
+    }
+
+    public Owner saveOwner(Owner owner) {
+        // TODO: check if already exists
+        return ownerRepository.save(owner);
     }
 }

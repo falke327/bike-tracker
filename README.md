@@ -66,12 +66,21 @@ locally.
 
 ### /owners
 
-- <b>GET (no Parameters)</b><br>
+- /all <b>GET (no Parameters)</b><br>
   Returns all owners that are persisted in the Database.
 
-- <b>POST (Body: Owner)</b><br>
+- /{id} <b>GET (id Parameter)</b><br>
+  Returns one single owner with given id or null.
+
+- /create <b>POST (Body: Owner)</b><br>
   You can perform a POST request against owners with a body containing `{ "firstName": "Foo", "lastName": "Bar" }` to
   add a new owner to the database.
+
+- /delete/{id} <b>GET (id Parameter)</b><br>
+  Deletes Entry with given id. Entry must exist.
+
+- /update/{id} <b>PATCH (id Parameter, Body: Owner)</b><br>
+  Updates owner with given id and input from message body.
 
 ## TODOs
 

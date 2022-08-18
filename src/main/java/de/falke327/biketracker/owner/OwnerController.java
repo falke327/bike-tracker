@@ -1,9 +1,11 @@
 package de.falke327.biketracker.owner;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/owners")
@@ -12,18 +14,39 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Owner> getAllOwners() {
         return ownerService.getAllOwners();
     }
 
-    @PostMapping
-    public void addOwner(@RequestBody Owner owner) {
-        ownerService.addOwner(owner);
+    @GetMapping("/{id}")
+    public Owner getOwnerById(@PathVariable("id") Long id) {
+        Optional<Owner> optOwner = ownerService.getOwnerById(id);
+        return optOwner.orElse(null);
     }
 
-//    @PostMapping
-//    public void deleteOwnerById(@RequestBody Long id) {
-//        ownerService.deleteOwnerById(id);
-//    }
+    @PostMapping(path = "/create", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Owner addOwner(@RequestBody Owner owner) {
+        return ownerService.addOwner(owner);
+    }
+
+    @GetMapping("/delete/{id}")
+    public void deleteOwnerById(@PathVariable("id") Long id) {
+        ownerService.deleteOwnerById(id);
+    }
+
+    @PatchMapping(path = "/update/{id}", consumes = "application/json")
+    public Owner patchOwner(@PathVariable("id") Long id, @RequestBody Owner patch) {
+        Owner owner = ownerService.getOwnerById(id).orElse(new Owner());
+
+        if (patch.getFirstName() != null) {
+            owner.setFirstName(patch.getFirstName());
+        }
+        if (patch.getLastName() != null) {
+            owner.setLastName(patch.getLastName());
+        }
+
+        return ownerService.saveOwner(owner);
+    }
 }
