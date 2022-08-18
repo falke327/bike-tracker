@@ -31,7 +31,8 @@ public class OwnerController {
         return ownerService.addOwner(owner);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteOwnerById(@PathVariable("id") Long id) {
         ownerService.deleteOwnerById(id);
     }
