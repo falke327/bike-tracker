@@ -47,6 +47,9 @@ public class OwnerController {
         if (patch.getLastName() != null) {
             owner.setLastName(patch.getLastName());
         }
+        if (!patch.getBikes().isEmpty()) {
+            patch.getBikes().forEach(owner::addBike);
+        }
 
         return ownerService.saveOwner(owner);
     }

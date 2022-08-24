@@ -1,5 +1,6 @@
 package de.falke327.biketracker.owner;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.falke327.biketracker.bike.Bike;
 import lombok.*;
 
@@ -51,9 +52,10 @@ public class Owner {
     @OneToMany(
             mappedBy = "owner",
             orphanRemoval = true, // remove bikes when owner is removed
-            cascade = CascadeType.ALL, // always persist or remove bikes together with owner
+            cascade = CascadeType.ALL, // always persist or remove bikes together with owner -> bike doesn't need the repository interface
             fetch = FetchType.EAGER // fetch the books in same query as owners can slow down big applications
     )
+    @JsonManagedReference
     private List<Bike> bikes = new ArrayList<>();
 
     public Owner(String firstName, String lastName) {

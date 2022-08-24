@@ -1,10 +1,11 @@
 CREATE TYPE bike_tracker."bike_type" AS ENUM (
-    'Children',
-    'City',
-    'EBike',
+    'CHILDREN',
+    'CITY',
+    'EBIKE',
     'MTB',
-    'Race',
-    'Trekking'
+    'RACE',
+    'TREKKING',
+    'OTHER'
 );
 
 CREATE TABLE bike_tracker.owner

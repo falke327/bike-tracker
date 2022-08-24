@@ -84,6 +84,9 @@ locally.
 
 ## TODOs
 
+- fix owner update with bike
+- also see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+
 - For using views make the Entity @Immutable and use a Read-only Repository
 > @NoRepositoryBean<br>
 > public interface ReadOnlyRepository<T, ID> extends Repository<T, ID> {<br>

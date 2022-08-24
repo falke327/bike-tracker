@@ -1,5 +1,6 @@
 package de.falke327.biketracker.bike;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.falke327.biketracker.owner.Owner;
 import lombok.*;
 
@@ -42,6 +43,7 @@ public class Bike {
                     name = "bike_bike_owner_fkey"
             )
     )
+    @JsonBackReference
     private Owner owner;
 
     @Column(
@@ -62,5 +64,6 @@ public class Bike {
     @Column(
             name = "type"
     )
+    @Enumerated(EnumType.STRING)
     private BikeType bikeType;
 }

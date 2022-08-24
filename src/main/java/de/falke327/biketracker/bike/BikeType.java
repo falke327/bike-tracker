@@ -6,5 +6,6 @@ public enum BikeType {
     EBIKE,
     MTB,
     RACE,
-    TREKKING
+    TREKKING,
+    OTHER
 }
