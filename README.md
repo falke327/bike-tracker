@@ -149,3 +149,9 @@ Something like that:
 > jdbcTemplate.execute("DELETE FROM ASD");<br>
 > jdbcTemplateAdmin.execute("TRUNCATE TABLE FOO.XYZ");<br>
 > }<br>
+> protected void initDb() throws ScriptException, SQLException {
+> executeScript("db/foo.sql");
+> }
+> protected void executeScript(String script) throws ScriptException, SQLException {
+> ScriptUtils.executeSqlScript(pieDatasource.getConnection(), new ClassPathResource(script));
+> }
