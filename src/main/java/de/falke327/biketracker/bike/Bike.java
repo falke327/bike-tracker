@@ -66,4 +66,16 @@ public class Bike {
     )
     @Enumerated(EnumType.STRING)
     private BikeType bikeType;
+
+    public void setType(String type) {
+        switch (type) {
+            case "CHILDREN" -> this.bikeType = BikeType.CHILDREN;
+            case "CITY" -> this.bikeType = BikeType.CITY;
+            case "EBIKE" -> this.bikeType = BikeType.EBIKE;
+            case "MTB" -> this.bikeType = BikeType.MTB;
+            case "RACE" -> this.bikeType = BikeType.RACE;
+            case "TREKKING" -> this.bikeType = BikeType.TREKKING;
+            default -> this.bikeType = BikeType.OTHER;
+        }
+    }
 }

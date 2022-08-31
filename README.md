@@ -84,8 +84,6 @@ locally.
 
 ## TODOs
 
-- fix owner update with bike
-- also see https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
 - for integration-testing see https://www.baeldung.com/integration-testing-a-rest-api
 - and https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
 
@@ -97,61 +95,4 @@ locally.
 >    Page<T> findAll(Pageable pageable);<br>
 >    Optional<T> findById(ID id);<br>
 >    long count();<br>
-> }
-
-- DB cleanup for testing
-Annotate Class with
-> @RunWith(CamelSpringRunner.class)<br>
-> @BootstrapWith(CamelTestContextBootstrapper.class)<br>
-> @ContextConfiguration(locations = { "classpath:/test-context.xml", "classpath:/test-jdbc-context.xml" })<br>
-> @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })<br>
-> @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)<br>
-> @UseAdviceWith<br>
-
-Write resources/test-jdbc-context.xml
-
-Something like that:
-> <?xml version="1.0" encoding="UTF-8"?>
-> <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
-> xmlns:util="http://www.springframework.org/schema/util" xmlns:c="http://www.springframework.org/schema/c"
-> xsi:schemaLocation="
-> http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-> http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-> http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-> ">
->  <bean id="adminOnDEV" parent="defaultDS">
->    <property name="driverClass" value="org.postgresql.Driver" />
->    <property name="jdbcUrl" value="jdbc:postgresql://${db-host}:${db-port}/${db-name}" />
->    <property name="user" value="ADMIN" />
->    <property name="password" value="${dev-admin-password}" />
->    <property name="preferredTestQuery" value="select 1" />
->  </bean>
-> </beans>
-
-> @Autowired<br>
-> @Qualifier("fooDS")<br>
-> protected DataSource dataSource;<br>
-> <br>
-> @Autowired<br>
-> @Qualifier("adminOnDEV")<br>
-> protected DataSource dataSourceAdminDEV;<br>
-> protected JdbcTemplate jdbcTemplate;<br>
-> protected JdbcTemplate jdbcTemplateAdmin;<br>
-> @Before<br>
-> public void setUpCommon() throws Exception {<br>
-> jdbcTemplate = new JdbcTemplate(dataSource);<br>
-> jdbcTemplateAdmin = new JdbcTemplate(dataSourceAdminDEV);<br>
-> initDb();<br>
-> }<br>
-> @After<br>
-> public void cleanUp() {<br>
-> jdbcTemplate.execute("DELETE FROM XYZ");<br>
-> jdbcTemplate.execute("DELETE FROM ASD");<br>
-> jdbcTemplateAdmin.execute("TRUNCATE TABLE FOO.XYZ");<br>
-> }<br>
-> protected void initDb() throws ScriptException, SQLException {
-> executeScript("db/foo.sql");
-> }
-> protected void executeScript(String script) throws ScriptException, SQLException {
-> ScriptUtils.executeSqlScript(pieDatasource.getConnection(), new ClassPathResource(script));
 > }

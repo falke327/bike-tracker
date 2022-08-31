@@ -1,12 +1,12 @@
-CREATE TYPE bike_tracker."bike_type" AS ENUM (
-    'CHILDREN',
-    'CITY',
-    'EBIKE',
-    'MTB',
-    'RACE',
-    'TREKKING',
-    'OTHER'
-);
+-- CREATE TYPE bike_tracker."bike_type" AS ENUM (
+--     'CHILDREN',
+--     'CITY',
+--     'EBIKE',
+--     'MTB',
+--     'RACE',
+--     'TREKKING',
+--     'OTHER'
+-- );
 
 CREATE TABLE bike_tracker.owner
 (
@@ -23,7 +23,8 @@ CREATE TABLE bike_tracker.bike
     name       varchar(100) NOT NULL,
     vendor     varchar(100) NULL,
     model      varchar(100) NULL,
-    type       bike_tracker."bike_type" NULL,
+--     type       bike_tracker."bike_type" NULL,
+    type       varchar(100) NULL,
     CONSTRAINT pk_bike PRIMARY KEY (id),
     CONSTRAINT bike_bike_owner_fkey FOREIGN KEY (bike_owner) REFERENCES bike_tracker."owner" (id)
 );
