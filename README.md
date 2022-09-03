@@ -84,9 +84,6 @@ locally.
 
 ## TODOs
 
-- for integration-testing see https://www.baeldung.com/integration-testing-a-rest-api
-- and https://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
-
 - For using views make the Entity @Immutable and use a Read-only Repository
 > @NoRepositoryBean<br>
 > public interface ReadOnlyRepository<T, ID> extends Repository<T, ID> {<br>
