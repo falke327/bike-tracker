@@ -5,10 +5,7 @@ import de.falke327.biketracker.bike.BikeType;
 import de.falke327.biketracker.owner.Owner;
 import de.falke327.biketracker.owner.OwnerRepository;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -22,8 +19,7 @@ import org.springframework.jdbc.datasource.init.ScriptException;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
@@ -118,8 +114,9 @@ public class OwnerTest {
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
         Owner responseOwner = RetrieveUtil.retrieveResourceFromResponse(HTTP_RESPONSE, Owner.class);
-        Owner checkOwner = ownerRepository.findById(responseOwner.getId()).get();
+        Owner checkOwner = ownerRepository.findById(responseOwner.getId()).orElse(null);
 
+        assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
         assertEquals(NEW_TEST_OWNER.getLastName(), checkOwner.getLastName());
     }
@@ -144,12 +141,29 @@ public class OwnerTest {
         assertEquals(200, HTTP_RESPONSE.getStatusLine().getStatusCode());
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
-        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).get();
+        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
 
+        assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
         assertEquals(NEW_TEST_OWNER.getLastName(), checkOwner.getLastName());
         assertNotEquals(this.testOwner.getFirstName(), checkOwner.getFirstName());
         assertNotEquals(this.testOwner.getLastName(), checkOwner.getLastName());
+    }
+
+    @Test
+    public void testOwnerAndBikeDeletion() throws IOException {
+        // Given
+        final HttpUriRequest REQUEST = new HttpDelete("http://localhost:8080/api/v1/owners/delete/" + this.testOwner.getId());
+
+        // When
+        final HttpResponse HTTP_RESPONSE = HttpClientBuilder.create().build().execute(REQUEST);
+
+        //Then
+        assertEquals(204, HTTP_RESPONSE.getStatusLine().getStatusCode());
+
+        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
+        assertNull(checkOwner);
+        // TODO: Test that Bike is also deleted
     }
 
     private String createJsonBody(Owner newTestOwner, Bike newTestBike) {
