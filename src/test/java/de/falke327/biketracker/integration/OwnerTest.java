@@ -6,6 +6,7 @@ import de.falke327.biketracker.owner.Owner;
 import de.falke327.biketracker.owner.OwnerRepository;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
@@ -22,6 +23,7 @@ import org.springframework.jdbc.datasource.init.ScriptException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
@@ -106,20 +108,48 @@ public class OwnerTest {
         String jsonBody = createJsonBody(NEW_TEST_OWNER, NEW_TEST_BIKE);
 
         request.setEntity(new StringEntity(jsonBody, ContentType.APPLICATION_JSON));
-        logger.info(request.getEntity().toString());
+        logger.debug(request.getEntity().toString());
 
         // When
         final HttpResponse HTTP_RESPONSE = HttpClientBuilder.create().build().execute(request);
 
         // Then
         assertEquals(201, HTTP_RESPONSE.getStatusLine().getStatusCode());
-        logger.info(HTTP_RESPONSE.getEntity().toString());
+        logger.debug(HTTP_RESPONSE.getEntity().toString());
 
         Owner responseOwner = RetrieveUtil.retrieveResourceFromResponse(HTTP_RESPONSE, Owner.class);
         Owner checkOwner = ownerRepository.findById(responseOwner.getId()).get();
 
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
         assertEquals(NEW_TEST_OWNER.getLastName(), checkOwner.getLastName());
+    }
+
+    @Test
+    public void testOwnerPatch() throws IOException {
+        // Given
+        final Owner NEW_TEST_OWNER = new Owner("Hans", "Hansen");
+        final Bike NEW_TEST_BIKE = new Bike(null, null, "Enterprise", "Utopia Planitia", "Spaceship", BikeType.OTHER);
+        NEW_TEST_OWNER.addBike(NEW_TEST_BIKE);
+
+        HttpPatch request = new HttpPatch("http://localhost:8080/api/v1/owners/update/" + this.testOwner.getId());
+        String jsonBody = createJsonBody(NEW_TEST_OWNER, NEW_TEST_BIKE);
+
+        request.setEntity(new StringEntity(jsonBody, ContentType.APPLICATION_JSON));
+        logger.debug(request.getEntity().toString());
+
+        // When
+        final HttpResponse HTTP_RESPONSE = HttpClientBuilder.create().build().execute(request);
+
+        // Then
+        assertEquals(200, HTTP_RESPONSE.getStatusLine().getStatusCode());
+        logger.debug(HTTP_RESPONSE.getEntity().toString());
+
+        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).get();
+
+        assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
+        assertEquals(NEW_TEST_OWNER.getLastName(), checkOwner.getLastName());
+        assertNotEquals(this.testOwner.getFirstName(), checkOwner.getFirstName());
+        assertNotEquals(this.testOwner.getLastName(), checkOwner.getLastName());
     }
 
     private String createJsonBody(Owner newTestOwner, Bike newTestBike) {
