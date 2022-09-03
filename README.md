@@ -41,7 +41,6 @@ In all cases you need to configure a PostgreSQL database first.
 
 ### PostgreSQL Docker Container
 
-[//]: # (TODO: Provide Docker compose file)
 I highly recommend using a postgres docker container as database in development mode.
 When you have installed docker on your system you can run `./init-test-database.bat` int the bin/ directory
 to automatically configure the needed container.
@@ -74,22 +73,26 @@ locally.
 
 - /create <b>POST (Body: Owner)</b><br>
   You can perform a POST request against owners with a body containing `{ "firstName": "Foo", "lastName": "Bar" }` to
-  add a new owner to the database.
+  add a new owner to the database.<br>
+  By adding `"bikes": [ { "name":"bla", "maker":"blub", "model":"NX-01", "bikeType":"OTHER"}, ... ]` to your owner you
+  will automatically create a corresponding bike in your database for given owner.
 
-- /delete/{id} <b>GET (id Parameter)</b><br>
+- /delete/{id} <b>DELETE (id Parameter)</b><br>
   Deletes Entry with given id. Entry must exist.
 
 - /update/{id} <b>PATCH (id Parameter, Body: Owner)</b><br>
-  Updates owner with given id and input from message body.
+  Updates owner with given id and input from message body. Body can be used similar to POST.
 
 ## TODOs
 
+- Provide Docker compose file
 - For using views make the Entity @Immutable and use a Read-only Repository
+
 > @NoRepositoryBean<br>
 > public interface ReadOnlyRepository<T, ID> extends Repository<T, ID> {<br>
->    List<T> findAll();<br>
->    List<T> findAll(Sort sort);<br>
->    Page<T> findAll(Pageable pageable);<br>
->    Optional<T> findById(ID id);<br>
->    long count();<br>
+> List<T> findAll();<br>
+> List<T> findAll(Sort sort);<br>
+> Page<T> findAll(Pageable pageable);<br>
+> Optional<T> findById(ID id);<br>
+> long count();<br>
 > }
