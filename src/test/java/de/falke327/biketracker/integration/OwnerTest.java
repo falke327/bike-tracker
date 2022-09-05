@@ -39,7 +39,7 @@ public class OwnerTest {
 
     @BeforeEach
     public void cleanUp() {
-        ownerRepository.deleteAll();
+        this.ownerRepository.deleteAll();
         initDb();
     }
 
@@ -123,7 +123,7 @@ public class OwnerTest {
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
         Owner responseOwner = RetrieveUtil.retrieveResourceFromResponse(HTTP_RESPONSE, Owner.class);
-        Owner checkOwner = ownerRepository.findById(responseOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(responseOwner.getId()).orElse(null);
 
         assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
@@ -159,7 +159,7 @@ public class OwnerTest {
         assertEquals(200, HTTP_RESPONSE.getStatusLine().getStatusCode());
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
-        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(this.testOwner.getId()).orElse(null);
 
         assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
@@ -179,7 +179,7 @@ public class OwnerTest {
         //Then
         assertEquals(204, HTTP_RESPONSE.getStatusLine().getStatusCode());
 
-        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(this.testOwner.getId()).orElse(null);
         assertNull(checkOwner);
         // TODO: Test that Bike is also deleted
     }
@@ -223,8 +223,8 @@ public class OwnerTest {
                 "Bar",
                 BikeType.RACE
         );
-        testOwner.addBike(this.testBike);
-        ownerRepository.save(this.testOwner);
+        this.testOwner.addBike(this.testBike);
+        this.ownerRepository.save(this.testOwner);
     }
 
     // TODO: create random testowners and bikes
