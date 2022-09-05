@@ -96,8 +96,17 @@ public class OwnerTest {
     @Test
     public void testOwnerCreation() throws IOException {
         // Given
-        final Owner NEW_TEST_OWNER = new Owner("Hans", "Hansen");
-        final Bike NEW_TEST_BIKE = new Bike(null, null, "Enterprise", "Utopia Planitia", "Spaceship", BikeType.OTHER);
+        final Owner NEW_TEST_OWNER = new Owner(
+                "Hans",
+                "Hansen"
+        );
+        final Bike NEW_TEST_BIKE = new Bike(
+                null,
+                null,
+                "Enterprise",
+                "Utopia Planitia",
+                "Spaceship", BikeType.OTHER
+        );
         NEW_TEST_OWNER.addBike(NEW_TEST_BIKE);
 
         HttpPost request = new HttpPost("http://localhost:8080/api/v1/owners/create");
@@ -124,8 +133,17 @@ public class OwnerTest {
     @Test
     public void testOwnerPatch() throws IOException {
         // Given
-        final Owner NEW_TEST_OWNER = new Owner("Hans", "Hansen");
-        final Bike NEW_TEST_BIKE = new Bike(null, null, "Enterprise", "Utopia Planitia", "Spaceship", BikeType.OTHER);
+        final Owner NEW_TEST_OWNER = new Owner(
+                "Hans",
+                "Hansen"
+        );
+        final Bike NEW_TEST_BIKE = new Bike(
+                null,
+                null,
+                "Enterprise",
+                "Utopia Planitia",
+                "Spaceship", BikeType.OTHER
+        );
         NEW_TEST_OWNER.addBike(NEW_TEST_BIKE);
 
         HttpPatch request = new HttpPatch("http://localhost:8080/api/v1/owners/update/" + this.testOwner.getId());
@@ -193,9 +211,21 @@ public class OwnerTest {
     }
 
     protected void initDb() throws ScriptException {
-        this.testOwner = new Owner("Klaus", "Testmann");
-        this.testBike = new Bike(null, null, "Test", "Foo", "Bar", BikeType.RACE);
+        this.testOwner = new Owner(
+                "Klaus",
+                "Testmann"
+        );
+        this.testBike = new Bike(
+                null,
+                null,
+                "Test",
+                "Foo",
+                "Bar",
+                BikeType.RACE
+        );
         testOwner.addBike(this.testBike);
         ownerRepository.save(this.testOwner);
     }
+
+    // TODO: create random testowners and bikes
 }
