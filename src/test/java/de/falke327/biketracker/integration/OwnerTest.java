@@ -167,16 +167,27 @@ public class OwnerTest {
     }
 
     private String createJsonBody(Owner newTestOwner, Bike newTestBike) {
-        String jsonBody = "{"
-                + "\"firstName\":\"" + newTestOwner.getFirstName() + "\","
-                + "\"lastName\":\"" + newTestOwner.getLastName() + "\","
-                + "\"bikes\": [" + "{"
-                + "\"name\":\"" + newTestBike.getName() + "\","
-                + "\"maker\":\"" + newTestBike.getMaker() + "\","
-                + "\"model\":\"" + newTestBike.getModel() + "\","
-                + "\"bikeType\":\"" + newTestBike.getBikeType() + "\""
-                + "}" + "]"
-                + "}";
+        String jsonBody = """
+                {
+                "firstName":"%s",
+                "lastName":"%s",
+                "bikes": [
+                        {
+                            "name":"%s",
+                            "maker":"%s",
+                            "model":"%s",
+                            "bikeType":"%s"
+                        }
+                    ]
+                }
+                """.formatted(
+                newTestOwner.getFirstName(),
+                newTestOwner.getLastName(),
+                newTestBike.getName(),
+                newTestBike.getMaker(),
+                newTestBike.getModel(),
+                newTestBike.getBikeType()
+        );
         logger.info(jsonBody);
         return jsonBody;
     }
