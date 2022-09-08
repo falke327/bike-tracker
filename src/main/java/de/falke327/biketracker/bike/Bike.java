@@ -68,14 +68,14 @@ public class Bike {
     private BikeType bikeType;
 
     public void setType(String type) {
-        switch (type) {
-            case "CHILDREN" -> this.bikeType = BikeType.CHILDREN;
-            case "CITY" -> this.bikeType = BikeType.CITY;
-            case "EBIKE" -> this.bikeType = BikeType.EBIKE;
-            case "MTB" -> this.bikeType = BikeType.MTB;
-            case "RACE" -> this.bikeType = BikeType.RACE;
-            case "TREKKING" -> this.bikeType = BikeType.TREKKING;
-            default -> this.bikeType = BikeType.OTHER;
-        }
+        this.bikeType = switch (type) {
+            case "CHILDREN"     -> BikeType.CHILDREN;
+            case "CITY"         -> BikeType.CITY;
+            case "EBIKE"        -> BikeType.EBIKE;
+            case "MTB"          -> BikeType.MTB;
+            case "RACE"         -> BikeType.RACE;
+            case "TREKKING"     -> BikeType.TREKKING;
+            default             -> BikeType.OTHER;
+        };
     }
 }

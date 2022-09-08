@@ -42,7 +42,7 @@ public class OwnerTest {
 
     @BeforeEach
     public void cleanUp() {
-        ownerRepository.deleteAll();
+        this.ownerRepository.deleteAll();
         initDb();
     }
 
@@ -144,7 +144,7 @@ public class OwnerTest {
         assertEquals(200, HTTP_RESPONSE.getStatusLine().getStatusCode());
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
-        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(this.testOwner.getId()).orElse(null);
 
         assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
@@ -164,22 +164,33 @@ public class OwnerTest {
         //Then
         assertEquals(204, HTTP_RESPONSE.getStatusLine().getStatusCode());
 
-        Owner checkOwner = ownerRepository.findById(this.testOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(this.testOwner.getId()).orElse(null);
         assertNull(checkOwner);
         // TODO: Test that Bike is also deleted
     }
 
     private String createJsonBody(Owner newTestOwner, Bike newTestBike) {
-        String jsonBody = "{"
-                + "\"firstName\":\"" + newTestOwner.getFirstName() + "\","
-                + "\"lastName\":\"" + newTestOwner.getLastName() + "\","
-                + "\"bikes\": [" + "{"
-                + "\"name\":\"" + newTestBike.getName() + "\","
-                + "\"maker\":\"" + newTestBike.getMaker() + "\","
-                + "\"model\":\"" + newTestBike.getModel() + "\","
-                + "\"bikeType\":\"" + newTestBike.getBikeType() + "\""
-                + "}" + "]"
-                + "}";
+        String jsonBody = """
+                {
+                "firstName":"%s",
+                "lastName":"%s",
+                "bikes": [
+                        {
+                            "name":"%s",
+                            "maker":"%s",
+                            "model":"%s",
+                            "bikeType":"%s"
+                        }
+                    ]
+                }
+                """.formatted(
+                newTestOwner.getFirstName(),
+                newTestOwner.getLastName(),
+                newTestBike.getName(),
+                newTestBike.getMaker(),
+                newTestBike.getModel(),
+                newTestBike.getBikeType()
+        );
         logger.info(jsonBody);
         return jsonBody;
     }
