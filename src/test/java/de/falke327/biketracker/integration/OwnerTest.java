@@ -172,16 +172,16 @@ public class OwnerTest {
     private String createJsonBody(Owner newTestOwner, Bike newTestBike) {
         String jsonBody = """
                 {
-                "firstName":"%s",
-                "lastName":"%s",
-                "bikes": [
-                        {
-                            "name":"%s",
-                            "maker":"%s",
-                            "model":"%s",
-                            "bikeType":"%s"
-                        }
-                    ]
+                "firstName" : "%s",
+                "lastName"  : "%s",
+                "bikes"     : [
+                                {
+                                "name"     : "%s",
+                                "maker"    : "%s",
+                                "model"    : "%s",
+                                "bikeType" : "%s"
+                                }
+                              ]
                 }
                 """.formatted(
                 newTestOwner.getFirstName(),

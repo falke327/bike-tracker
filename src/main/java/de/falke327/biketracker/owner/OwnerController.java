@@ -50,6 +50,7 @@ public class OwnerController {
         if (!patch.getBikes().isEmpty()) {
             patch.getBikes().forEach(owner::addBike);
         }
+        // TODO: how do we remove bikes?
 
         return ownerService.saveOwner(owner);
     }

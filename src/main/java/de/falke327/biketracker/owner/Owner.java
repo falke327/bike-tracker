@@ -53,7 +53,7 @@ public class Owner {
             mappedBy = "owner",
             orphanRemoval = true, // remove bikes when owner is removed
             cascade = CascadeType.ALL, // always persist or remove bikes together with owner -> bike doesn't need the repository interface
-            fetch = FetchType.EAGER // fetch the books in same query as owners can slow down big applications
+            fetch = FetchType.EAGER // fetch the bikes in same query as owners can slow down big applications
     )
     @JsonManagedReference
     private List<Bike> bikes = new ArrayList<>();
