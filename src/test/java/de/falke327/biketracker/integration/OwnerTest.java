@@ -1,5 +1,6 @@
 package de.falke327.biketracker.integration;
 
+import com.github.javafaker.Faker;
 import de.falke327.biketracker.bike.Bike;
 import de.falke327.biketracker.bike.BikeType;
 import de.falke327.biketracker.owner.Owner;
@@ -18,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.init.ScriptException;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +33,7 @@ public class OwnerTest {
 
     Logger logger = LoggerFactory.getLogger(OwnerTest.class);
 
+    private final Faker FAKER = new Faker(new Locale("de"));
     private Owner testOwner;
     private Bike testBike;
 
@@ -96,8 +99,8 @@ public class OwnerTest {
     @Test
     public void testOwnerCreation() throws IOException {
         // Given
-        final Owner NEW_TEST_OWNER = new Owner("Hans", "Hansen");
-        final Bike NEW_TEST_BIKE = new Bike(null, null, "Enterprise", "Utopia Planitia", "Spaceship", BikeType.OTHER);
+        final Owner NEW_TEST_OWNER = createFakeOwner();
+        final Bike NEW_TEST_BIKE = createFakeBike();
         NEW_TEST_OWNER.addBike(NEW_TEST_BIKE);
 
         HttpPost request = new HttpPost("http://localhost:8080/api/v1/owners/create");
@@ -114,7 +117,7 @@ public class OwnerTest {
         logger.debug(HTTP_RESPONSE.getEntity().toString());
 
         Owner responseOwner = RetrieveUtil.retrieveResourceFromResponse(HTTP_RESPONSE, Owner.class);
-        Owner checkOwner = ownerRepository.findById(responseOwner.getId()).orElse(null);
+        Owner checkOwner = this.ownerRepository.findById(responseOwner.getId()).orElse(null);
 
         assert checkOwner != null;
         assertEquals(NEW_TEST_OWNER.getFirstName(), checkOwner.getFirstName());
@@ -124,8 +127,8 @@ public class OwnerTest {
     @Test
     public void testOwnerPatch() throws IOException {
         // Given
-        final Owner NEW_TEST_OWNER = new Owner("Hans", "Hansen");
-        final Bike NEW_TEST_BIKE = new Bike(null, null, "Enterprise", "Utopia Planitia", "Spaceship", BikeType.OTHER);
+        final Owner NEW_TEST_OWNER = createFakeOwner();
+        final Bike NEW_TEST_BIKE = createFakeBike();
         NEW_TEST_OWNER.addBike(NEW_TEST_BIKE);
 
         HttpPatch request = new HttpPatch("http://localhost:8080/api/v1/owners/update/" + this.testOwner.getId());
@@ -182,9 +185,34 @@ public class OwnerTest {
     }
 
     protected void initDb() throws ScriptException {
-        this.testOwner = new Owner("Klaus", "Testmann");
-        this.testBike = new Bike(null, null, "Test", "Foo", "Bar", BikeType.RACE);
-        testOwner.addBike(this.testBike);
-        ownerRepository.save(this.testOwner);
+        this.testOwner = createFakeOwner();
+        this.testBike = createFakeBike();
+        this.testOwner.addBike(this.testBike);
+        this.ownerRepository.save(this.testOwner);
+    }
+
+    private Owner createFakeOwner() {
+        String firstName = this.FAKER.name().firstName();
+        String lastName = this.FAKER.name().lastName();
+
+        return new Owner(
+                firstName,
+                lastName
+        );
+    }
+
+    private Bike createFakeBike() {
+        String name = this.FAKER.funnyName().name();
+        String maker = this.FAKER.company().name();
+        String model = this.FAKER.starTrek().specie(); // ;P
+
+        return new Bike(
+                null,
+                null,
+                name,
+                maker,
+                model,
+                BikeType.getRandomBikeType()
+        );
     }
 }
