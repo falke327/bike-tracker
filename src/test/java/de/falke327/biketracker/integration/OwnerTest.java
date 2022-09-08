@@ -191,7 +191,7 @@ public class OwnerTest {
                 newTestBike.getModel(),
                 newTestBike.getBikeType()
         );
-        logger.info(jsonBody);
+        logger.debug(jsonBody);
         return jsonBody;
     }
 
@@ -218,7 +218,6 @@ public class OwnerTest {
         String model = this.FAKER.starTrek().specie(); // ;P
 
         return new Bike(
-                null,
                 null,
                 name,
                 maker,
