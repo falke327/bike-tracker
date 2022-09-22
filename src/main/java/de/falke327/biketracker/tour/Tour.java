@@ -1,5 +1,6 @@
 package de.falke327.biketracker.tour;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class Tour {
             updatable = false
     )
     private Long id;
-    // TODO : check nullables
+
     @Column(
             name = "tour_date",
             nullable = false
@@ -74,6 +75,7 @@ public class Tour {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "tour"
     )
+    @JsonManagedReference(value = "tour-movement")
     private List<Movement> movements = new ArrayList<>();
 
     public void addMovement(Movement movement) {

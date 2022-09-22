@@ -1,5 +1,6 @@
 package de.falke327.biketracker.tour;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.falke327.biketracker.bike.Bike;
 import lombok.*;
 
@@ -25,6 +26,7 @@ public class Movement {
                     name = "movements_bike_fkey"
             )
     )
+    @JsonBackReference(value = "bike-movement")
     private Bike bike;
 
     @ManyToOne
@@ -35,6 +37,7 @@ public class Movement {
                     name = "movements_tour_fkey"
             )
     )
+    @JsonBackReference(value = "tour-movement")
     private Tour tour;
 
     public Movement(Bike bike, Tour tour) {

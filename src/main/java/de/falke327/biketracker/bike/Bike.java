@@ -1,6 +1,7 @@
 package de.falke327.biketracker.bike;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.falke327.biketracker.owner.Owner;
 import de.falke327.biketracker.tour.Movement;
 import lombok.*;
@@ -36,7 +37,7 @@ public class Bike {
             updatable = false
     )
     private Long id;
-    // TODO : check nullables
+
     @ManyToOne
     @JoinColumn(
             name = "bike_owner",
@@ -76,6 +77,7 @@ public class Bike {
             fetch = FetchType.LAZY,
             mappedBy = "bike"
     )
+    @JsonManagedReference(value = "bike-movement")
     private List<Movement> movements = new ArrayList<>();
 
     public Bike(Owner owner, String name, String maker, String model, BikeType bikeType) {
@@ -88,13 +90,13 @@ public class Bike {
 
     public void setType(String type) {
         this.bikeType = switch (type) {
-            case "CHILDREN"     -> BikeType.CHILDREN;
-            case "CITY"         -> BikeType.CITY;
-            case "EBIKE"        -> BikeType.EBIKE;
-            case "MTB"          -> BikeType.MTB;
-            case "RACE"         -> BikeType.RACE;
-            case "TREKKING"     -> BikeType.TREKKING;
-            default             -> BikeType.OTHER;
+            case "CHILDREN" -> BikeType.CHILDREN;
+            case "CITY" -> BikeType.CITY;
+            case "EBIKE" -> BikeType.EBIKE;
+            case "MTB" -> BikeType.MTB;
+            case "RACE" -> BikeType.RACE;
+            case "TREKKING" -> BikeType.TREKKING;
+            default -> BikeType.OTHER;
         };
     }
 

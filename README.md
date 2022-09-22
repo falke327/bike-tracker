@@ -83,6 +83,8 @@ locally.
 
 ## TODOs
 
+- Implement Tour Repository
+- Integration Test Movements and Tours
 - For using views make the Entity @Immutable and use a Read-only Repository
 
 > @NoRepositoryBean<br>
