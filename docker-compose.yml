@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  bt-test:
+    image: postgres:alpine
+    volumes:
+      - test-db-data:/var/lib/postgresql/data
+    ports:
+      - 55010:5432
+    restart: on-failure
+    environment:
+      POSTGRES_USER: bike_tracker
+      POSTGRES_PASSWORD: bike22
+    networks:
+      - bt-db
+
+volumes:
+  test-db-data:
+
+networks:
+  bt-db:

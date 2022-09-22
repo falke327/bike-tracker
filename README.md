@@ -42,7 +42,7 @@ In all cases you need to configure a PostgreSQL database first.
 ### PostgreSQL Docker Container
 
 I highly recommend using a postgres docker container as database in development mode.
-When you have installed docker on your system you can run `./init-test-database.bat` int the bin/ directory
+When you have installed docker with compose on your system you can run the docker-compose.yml
 to automatically configure the needed container.
 
 If it already exists, and it is not up and running, you can simply start it via `docker start bt-test`
@@ -50,11 +50,6 @@ If it already exists, and it is not up and running, you can simply start it via 
 To psql into the postgres container use `./psql-into-database.bat` from bin/ directory.
 
 ### Initialize Database
-
-Currently, it is not possible to create roles and databases with flyway and connect to it
-in the same step. You need to execute the commands in `/src/main/resources/db/init` by hand before you
-can leave all the other database operations to flyway.
-You only need to do this on the first time you are going to use the database.
 
 Flyway will perform all commands provided in `/src/main/resources/db/migration` on application start up.
 
@@ -85,7 +80,6 @@ locally.
 
 ## TODOs
 
-- Provide Docker compose file
 - For using views make the Entity @Immutable and use a Read-only Repository
 
 > @NoRepositoryBean<br>

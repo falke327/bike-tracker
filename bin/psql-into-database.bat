@@ -1,7 +1,7 @@
-docker run -it --rm --network=bt-db postgres:alpine psql -h bt-test -U postgres
+docker run -it --rm --network=bike-tracker_bt-db postgres:alpine psql -h bt-test -U bike_tracker
 :: - runs a container in interactive mode
 :: - removes container after use
-:: - using the docker network fc-db
+:: - using the docker network bike-tracker_bt-db
 :: - uses latest postgres:alpine image
-:: - starts psql command on host container fc-dev
-:: - with user postgres
+:: - starts psql command on host container bt-test
+:: - with user bike_tracker
