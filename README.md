@@ -43,7 +43,10 @@ In all cases you need to configure a PostgreSQL database first.
 
 I highly recommend using a postgres docker container as database in development mode.
 When you have installed docker with compose on your system you can run the docker-compose.yml
-to automatically configure the needed container.
+to automatically configure the needed container by simply execute `docker compose up`.
+Your volume will be saved locally to `\\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes`.
+You can stop the test database setup with `docker compose down`. If you also want to delete the volume just
+append `--volumes`
 
 If it already exists, and it is not up and running, you can simply start it via `docker start bt-test`
 
