@@ -50,7 +50,8 @@ public class Bike {
     private Owner owner;
 
     @Column(
-            name = "name"
+            name = "name",
+            nullable = false
     )
     private String name;
 

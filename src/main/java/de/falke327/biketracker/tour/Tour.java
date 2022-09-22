@@ -36,18 +36,21 @@ public class Tour {
     private Long id;
     // TODO : check nullables
     @Column(
-            name = "tour_date"
+            name = "tour_date",
+            nullable = false
     )
     private LocalDate date;
 
     @Column(
             name = "distance",
-            columnDefinition = "NUMERIC(10,2)"
+            columnDefinition = "NUMERIC(10,2)",
+            nullable = false
     )
     private Double distance;
 
     @Column(
-            name = "description"
+            name = "description",
+            nullable = false
     )
     private String description;
 
