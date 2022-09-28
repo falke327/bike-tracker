@@ -30,7 +30,7 @@ public class OwnerService {
         ownerRepository.deleteById(id);
     }
 
-    public Owner saveOwner(Owner owner) {
+    public Owner updateOwner(Owner owner) {
         // TODO: check if already exists
         return ownerRepository.save(owner);
     }

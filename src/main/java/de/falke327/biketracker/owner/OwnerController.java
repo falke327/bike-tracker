@@ -22,6 +22,7 @@ public class OwnerController {
     @GetMapping("/{id}")
     public Owner getOwnerById(@PathVariable("id") Long id) {
         Optional<Owner> optOwner = ownerService.getOwnerById(id);
+
         return optOwner.orElse(null);
     }
 
@@ -52,6 +53,6 @@ public class OwnerController {
         }
         // TODO: how do we remove bikes?
 
-        return ownerService.saveOwner(owner);
+        return ownerService.updateOwner(owner);
     }
 }
