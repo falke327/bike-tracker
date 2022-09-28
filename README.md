@@ -105,7 +105,7 @@ locally.
   You can create a new Tour in the database with a body containing these informations:<br>
   `{ "date" : "yyyy-MM-dd", "distance" : 22.0, "description" : "Went to the beach", "drivingTime" : 30, "maximumSpeed" : 37.6, "additionalInfo" : null }`<br>
   This Tour is not assigned to a Bike until you connect it over the Movement. To do so add this to the Tour structure:<br>
-  `"movements" : [ {"id" : {"bikeId" : ##, "tourId" : ##} ]`
+  `"movements" : [ {"id" : {"bikeId" : ##, "tourId" : ##} ]`<br>
   A Bike with this id has to exist and the tourId must match the id returned when inserted to the database.
 
 - /delete/{id} <b>DELETE (id parameter)</b><br>
