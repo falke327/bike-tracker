@@ -73,27 +73,46 @@ locally.
 
 ### /owners
 
-- /all <b>GET (no Parameters)</b><br>
-  Returns all owners that are persisted in the Database.
+- /all <b>GET (no parameters)</b><br>
+  Returns all Owners that are persisted in the database.
 
-- /{id} <b>GET (id Parameter)</b><br>
-  Returns one single owner with given id or null.
+- /{id} <b>GET (id parameter)</b><br>
+  Returns one single Owner with given id or null.
 
-- /create <b>POST (Body: Owner)</b><br>
-  You can perform a POST request against owners with a body containing `{ "firstName": "Foo", "lastName": "Bar" }` to
-  add a new owner to the database.<br>
-  By adding `"bikes": [ { "name":"bla", "maker":"blub", "model":"NX-01", "bikeType":"OTHER"}, ... ]` to your owner you
-  will automatically create a corresponding bike in your database for given owner.
+- /create <b>POST (body: Owner)</b><br>
+  You can perform a POST request against Owners with a body containing<br>
+  `{ "firstName" : "Foo", "lastName" : "Bar" }`<br>
+  to add a new Owner to the database.<br>
+  By adding<br>
+  `"bikes" : [ { "name" : "bla", "maker" : "blub", "model" : "NX-01", "bikeType" : "OTHER"}, ... ]`<br>
+  to your Owner you will automatically create a corresponding Bike in your database for given owner.
 
-- /delete/{id} <b>DELETE (id Parameter)</b><br>
-  Deletes Entry with given id. Entry must exist.
+- /delete/{id} <b>DELETE (id parameter)</b><br>
+  Deletes Owner entry with given id. Entry must exist.
 
-- /update/{id} <b>PATCH (id Parameter, Body: Owner)</b><br>
-  Updates owner with given id and input from message body. Body can be used similar to POST.
+- /update/{id} <b>PATCH (id parameter, body: Owner)</b><br>
+  Updates Owner with given id and input from message body. Body can be used similar to POST.
+
+### /tours
+
+- /all <b>GET (no parameters)</b><br>
+  Returns all Tours that are persisted in the database.
+
+- /{id} <b>GET (id parameter)</b><br>
+  Returns one single Tour with given id if exists or null.
+
+- /create <b>POST (body: Tour)</b><br>
+  You can create a new Tour in the database with a body containing these informations:<br>
+  `{ "date" : "yyyy-MM-dd", "distance" : 22.0, "description" : "Went to the beach", "drivingTime" : 30, "maximumSpeed" : 37.6, "additionalInfo" : null }`<br>
+  This Tour is not assigned to a Bike until you connect it over the Movement. To do so add this to the Tour structure:<br>
+  `"movements" : [ {"id" : {"bikeId" : ##, "tourId" : ##} ]`
+  A Bike with this id has to exist and the tourId must match the id returned when inserted to the database.
+
+- /delete/{id} <b>DELETE (id parameter)</b><br>
+  Deletes Tour entry with given id. Entry must exist.
 
 ## TODOs
 
-- Implement Tour Repository
 - Integration Test Movements and Tours
 - For using views make the Entity @Immutable and use a Read-only Repository
 
