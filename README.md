@@ -7,6 +7,7 @@ I don't think this will be a big thing, but I try to build it fullstack.
 ## Table of Contents
 
 - [Introduction](#Introduction)
+- [Tech stack](#Tech stack)
 - [Versions](#Versions)
 - [Build](#Build)
 - [Run](#Run)
@@ -16,10 +17,18 @@ I don't think this will be a big thing, but I try to build it fullstack.
 
 In this App it is possible to save data about your bicycle movements, like driven kilometers, movement time, average
 speed and maximum speed. The App will provide you with a table-view of your monthly or yearly movements with
-the overall Kilometers and the current Top values for average and maximum speed.<br>
+the overall kilometers and the current top values for average and maximum speed.<br>
 It will also be possible to save your costs on parts and maintenance and calculate a costs per kilometer
 information.<br>
 I will try to visualize some things in charts.
+
+## Tech stack
+
+This project is made with <b>Java</b> and <b>Spring Boot</b> to provide a backend with <b>REST API</b>.
+The backend uses a <b>PostgreSQL</b> database for persistence which is called with <b>Spring Data JPA</b>.
+I also use <b>Flyway</b> to do my custom database migration to keep the full control by my own.
+After that I used some little helpers like <b>lombok</b> to reduce the overhead of writing the same code over and over
+again and <b>javafaker</b> to create the data for my integration tests.
 
 ## Versions
 
@@ -42,7 +51,7 @@ In all cases you need to configure a PostgreSQL database first.
 ### PostgreSQL Docker Container
 
 I highly recommend using a postgres docker container as database in development mode.
-When you have installed docker with compose on your system you can run the docker-compose.yml
+When you have installed docker and compose on your system you can run the docker-compose.yml
 to automatically configure the needed container by simply execute `docker compose up`.
 Your volume will be saved locally to `\\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes`.
 You can stop the test database setup with `docker compose down`. If you also want to delete the volume just
@@ -54,6 +63,7 @@ To psql into the postgres container use `./psql-into-database.bat` from bin/ dir
 
 ### Initialize Database
 
+Docker compose will bring up a test cluster and auto-generate the needed database, user and password.
 Flyway will perform all commands provided in `/src/main/resources/db/migration` on application start up.
 
 ## API
